@@ -40,21 +40,48 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
   cy.selectFieldValidation.call();   
   cy.get(pe.select_customer).clear().type(searchClient)
   cy.agapeFieldValidation.call();
+  cy.wait(1000)
   cy.get('.customerlist > .list-group').eq(0).its('children').then((item)=>{
     cy.get('li>b').each((el)=>{
-      el.text() == clientName ? cy.log('Ok!') && cy.get(el).click() : cy.log('waitForResponse')
-      
+      el.text() == clientName ? cy.log('Ok!') && cy.get(el).click() : cy.log('Other elements didnt match')
     })
   })
-  cy.agapeFieldValidation.call()
-  cy.elementExist(pe.proceed_but)
-  //cy.proceedButValidation.call();
+  cy.get(pe.proceed_but).should('not.be.disabled')
   cy.get(pe.proceed_but).click()
-  
   cy.url().should('eq', 'https://onetrackui.azurewebsites.net/invoicesTab/overview/0')
+  
+  cy.get(pe.search_field).click()
+
+  cy.wait(1000)
+  cy.get(pe.test_option).click()
+  cy.wait(1000)
+  cy.get(pe.search_field).click()
+  cy.wait(1000)
+  cy.get(pe.test_sec_option).click()
+  
+  cy.wait(1000)
+  
+  cy.get(pe.discount_add).click()
+  cy.get(pe.discount_number).clear().type('10')
+  cy.get(pe.discount_type).select(0)
+  cy.get(pe.discount_submit).click()
+  cy.get(pe.invoice_actions).click()
+  cy.wait(1000)
+  cy.get(pe.invoice_preview).click()
+  cy.wait(1000)
+  cy.iFrameValidation.call();
+  cy.elementExist(pe.prise_field).eq(1)
+  cy.elementExist(pe.preview_prise_field).eq(1)
+  //cy.get(pe.preview_prise_field).eq(1).then((item)=>{
+    //cy.each((ele)=>{
+     // ele.text() = b
+    //})
+  //})
+  //cy.log(b)
+  //cy.get(pe.random_item).eq(1).click()
+
+
   //cy.get(pe.new_invoice, { timeout: 100 }).click
-  cy.tTSFValidation.call();
-  cy.get(pe.type_to_search).clear().type(searchClient)  
   
 })  
 
@@ -92,12 +119,16 @@ Cypress.Commands.add('proceedButValidation', () => {
 
 })
 
-Cypress.Commands.add('tTSFValidation', () => {
+/*Cypress.Commands.add('tTSFValidation', () => {
   cy.intercept('GET', 'https://onetrackwebapi.azurewebsites.net/api/invoices/DefaultTerm').as('typeToSearch')
   cy.wait('@typeToSearch').its('response.statusCode').should('eq', 200)
 
-})
+})*/
 
+Cypress.Commands.add('iFrameValidation', () => {
+  cy.intercept('GET', 'https://onetrackwebapi.azurewebsites.net/api/Warehouse/').as('getIFrameValidation')
+  cy.wait('@getIFrameValidation').its('response.statusCode').should('eq', 200)
+})
 
 /*Cypress.Commands.add('elementloaded', (element) => {
   cy.wait(element).should('be.visible')

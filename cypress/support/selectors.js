@@ -25,13 +25,22 @@ export class PageElements {
     new_invoice = 'button.btn.btn-sm.btn-primary.m-r-sm.ng-star-inserted'
     select_customer = '[name="search"]'
     aMechanical = '[@b _ngcontent-wly-c382="">Agape Mechanical]'
-    serviceLocations = '//*[@id="page-wrapper"]/invoice-edit/div[1]/form/div/div/app-customer-selector/div[1]/div[2]/div/div[2]/div/ul/li/p'                  
     proceed_but = 'button.btn.btn-primary.m-r-sm'
 
     //------- Invoice setup
 
-    //type_to_search = "#mat-input-element.mat-form-field-autofill-control.mat-autocomplete-trigger.form-control.input-sm.ng-tns-c88-14.cdk-text-field-autofill-monitored.ng-pristine.ng-valid.ng-touched"
-
+    search_field = '#mat-input-6'
+    test_option = '#mat-option-11'
+    test_sec_option = '#mat-option-12'
+    discount_add = 'tr.ng-star-inserted > :nth-child(2) > .ng-star-inserted'
+    discount_number = 'input[name="discountValue"]'
+    discount_type = 'select[name="discountKind"]'
+    discount_submit = '#modalAddDiscount .btn-primary' 
+    invoice_actions = '.btn-group > .btn'
+    invoice_preview = '#page-wrapper > invoice-edit > div.wrapper.wrapper-content.ng-star-inserted > form > div > div.row.ng-star-inserted > div > div.topheader > div > ul > li:nth-child(3) > a >'
+    prise_field = '.table.invoice-total.readonly >> tr.total > td' //'tr.total > td[style="color: black;"]'
+    preview_prise_field = '.table.invoice-total >> tr.total > td'
+    preview_variable
     importOptions = {
         
         selectAll : '.soas>>input[type="checkbox"]',
