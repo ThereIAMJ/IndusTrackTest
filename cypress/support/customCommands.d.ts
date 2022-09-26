@@ -6,6 +6,7 @@ declare namespace Cypress {
         selectFieldValidation(element: any): Chainable<any>
         agapeFieldValidation(element: any): Chainable<any>
         proceedButValidation(element: any): Chainable<any>
+        iFrameValidation(element: any): Chainable<any>
         tTSFValidation(element: any): Chainable<any>
         elementIsVisible(element: any): Chainable<any>
         elementloaded(element: any): Chainable<any>
