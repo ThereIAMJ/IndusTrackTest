@@ -24,6 +24,7 @@ export class PageElements {
 
     new_invoice = 'button.btn.btn-sm.btn-primary.m-r-sm.ng-star-inserted'
     select_customer = '[name="search"]'
+    agapeVisible = 'p'
     aMechanical = '[@b _ngcontent-wly-c382="">Agape Mechanical]'
     proceed_but = 'button.btn.btn-primary.m-r-sm'
 
@@ -37,22 +38,15 @@ export class PageElements {
     discount_type = 'select[name="discountKind"]'
     discount_submit = '#modalAddDiscount .btn-primary' 
     invoice_actions = '.btn-group > .btn'
-    invoice_preview = '#page-wrapper > invoice-edit > div.wrapper.wrapper-content.ng-star-inserted > form > div > div.row.ng-star-inserted > div > div.topheader > div > ul > li:nth-child(3) > a >'
+    invoice_preview = 'div > ul > li:nth-child(3) > a' //'#page-wrapper > invoice-edit > div.wrapper.wrapper-content.ng-star-inserted > form > div > div.row.ng-star-inserted > div > div.topheader > div > ul > li:nth-child(3) > a >'
     prise_field = '.table.invoice-total.readonly >> tr.total > td' //'tr.total > td[style="color: black;"]'
     preview_prise_field = '.table.invoice-total >> tr.total > td'
-    preview_variable
-    importOptions = {
-        
-        selectAll : '.soas>>input[type="checkbox"]',
-        search_input : 'input[aria-label="Search"]',
-        submitImport_btn : '.soas>>>button.btn-success'
 
-    }
+    //iFrame
 
-
-    importedOrders_table = '.orders-rows'
-    importedOrders = '.order-row'
-
-    
+    iFrameBody = '#contentHolder'
+    iFrameClosebutton = 'button.mat-focus-indicator.btn.btn-white.mat-button.mat-button-base._mat-animation-noopable'
+    invoice_delete = 'div > ul > li:nth-child(11) > a'
+    invoice_delete_confirm = ('button.mat-focus-indicator.btn.btn-primary.mat-button.mat-button-base._mat-animation-noopable.ng-star-inserted')
 
 }
