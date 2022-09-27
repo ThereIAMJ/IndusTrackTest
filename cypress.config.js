@@ -24,8 +24,8 @@ module.exports = defineConfig({
     chromeWebSecurity: false,
     hideXHR: true,
     //numTestsKeptInMemory: ,
-    defaultCommandTimeout: 5000,
-    //retries: 10,
+    defaultCommandTimeout: 8000,
+    retries: 10,
     
     setupNodeEvents(on, config) {
       // implement node event listeners here
