@@ -33,6 +33,7 @@ export class PageElements {
     search_field = '#mat-input-6'
     test_option = '#mat-option-11'
     test_sec_option = '#mat-option-12'
+    random_item = '#mat-autocomplete-1'
     discount_add = 'tr.ng-star-inserted > :nth-child(2) > .ng-star-inserted'
     discount_number = 'input[name="discountValue"]'
     discount_type = 'select[name="discountKind"]'
