@@ -17,14 +17,12 @@ export class PageElements {
     submitLogin_btn = '.mat-focus-indicator'
 
     //------- Header Menu
-
     invoice = '[routerlink="/invoicesTab"]'
 
     //------- Invoice
 
     new_invoice = 'button.btn.btn-sm.btn-primary.m-r-sm.ng-star-inserted'
     select_customer = '[name="search"]'
-    agapeVisible = 'p'
     aMechanical = '[@b _ngcontent-wly-c382="">Agape Mechanical]'
     proceed_but = 'button.btn.btn-primary.m-r-sm'
 
@@ -33,14 +31,14 @@ export class PageElements {
     search_field = '#mat-input-6'
     test_option = '#mat-option-11'
     test_sec_option = '#mat-option-12'
-    random_item = '#mat-autocomplete-1'
+    random_item = '.mat-option.mat-focus-indicator.ng-star-inserted'
     discount_add = 'tr.ng-star-inserted > :nth-child(2) > .ng-star-inserted'
     discount_number = 'input[name="discountValue"]'
     discount_type = 'select[name="discountKind"]'
     discount_submit = '#modalAddDiscount .btn-primary' 
     invoice_actions = '.btn-group > .btn'
-    invoice_preview = 'div > ul > li:nth-child(3) > a' //'#page-wrapper > invoice-edit > div.wrapper.wrapper-content.ng-star-inserted > form > div > div.row.ng-star-inserted > div > div.topheader > div > ul > li:nth-child(3) > a >'
-    prise_field = '.table.invoice-total.readonly >> tr.total > td' //'tr.total > td[style="color: black;"]'
+    invoice_preview = 'div > ul > li:nth-child(3) > a' 
+    prise_field = '.table.invoice-total.readonly >> tr.total > td' 
     preview_prise_field = '.table.invoice-total >> tr.total > td'
 
     //iFrame

@@ -6,17 +6,15 @@ const {
 
 const pe = new PageElements()
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
+
 
 Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
   cy.get(pe.email_input).clear().type(email)
   cy.get(pe.password_input).clear().type(password)
   cy.get(pe.submitLogin_btn).should('not.be.disabled')
   cy.get(pe.loginForm).click()
+  cy.elementIsVisible('ul[class="nav navbar-nav"] > li > ').contains('Invoice')
   cy.loginFormValidation.call();
-
   cy.get(pe.invoice).click()
   cy.get(pe.new_invoice).click()    
   cy.selectFieldValidation.call();   
@@ -27,26 +25,22 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
   cy.get(pe.proceed_but).should('not.be.disabled')
   cy.get(pe.proceed_but).click()
   cy.url().should('eq', 'https://onetrackui.azurewebsites.net/invoicesTab/overview/0')
+  cy.get(pe.search_field).click()
+  cy.wait(1000)
+  cy.newRandomItem.call();
+  cy.get(pe.search_field).click()
+  cy.wait(1000)
+  cy.newRandomItem.call();
+  cy.wait(1000)
 
   //cy.get(pe.test_sec_option, setTimeout = 100 ).click()////////////////////
 
-  cy.get(pe.search_field).click()
-  cy.wait(1000)
-  //cy.newRandomItem.call();
-  //cy.tTSFValidation.call();
-  cy.wait(1000)
-  cy.get(pe.test_option).click()
-  //cy.pause()
-  cy.wait(1000)
-  cy.get(pe.search_field).click()
-  cy.wait(1000)
-  cy.get(pe.test_sec_option).click()
-  cy.wait(1000)
   cy.get(pe.discount_add).click()
   cy.get(pe.discount_number).clear().type('10')
   cy.get(pe.discount_type).select(0)
   cy.get(pe.discount_submit).click()
   cy.get(pe.invoice_actions).click()
+  //cy.pause();
   cy.wait(1000)
   cy.get(pe.invoice_preview).contains("Preview").click()
   cy.wait(1000)
@@ -61,24 +55,13 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
 
   
 }) 
-  //cy.iFrameCommand
-
-
-  //cy.elementExist(pe.prise_field).eq(1)
-  //cy.elementExist(pe.preview_prise_field).eq(1)
-  
-
-  //cy.get(pe.new_invoice, { timeout: 100 }).click
-
+ 
   //------API  
 
   Cypress.Commands.add('loginFormValidation', () => {
-    cy.intercept('POST', 'https://onetrackwebapi.azurewebsites.net/api/AddressBooks/GeoLocate/').as('homePageDownloaded')
-    cy.wait('@homePageDownloaded').its('response.statusCode').should('eq', 200)
-    //cy.get(pe.loginForm).should('be.visible')
-    //cy.get(pe.email_input).should('be.visible').and('have.attr', 'placeholder', 'Username')
-    //cy.get(pe.password_input).should('be.visible').and('have.attr', 'placeholder', 'Password')
-    //cy.get(pe.submitLogin_btn).should('be.visible').and('have.text', 'Ready for a drive ?')
+    cy.intercept('GET', 'https://onetrackwebapi.azurewebsites.net/api/map/GetEmployeesGroups').as('loginPageDownloaded')
+    cy.wait('@loginPageDownloaded').its('response.statusCode').should('eq', 200)
+    
 
   })
   Cypress.Commands.add('invoiceTabValidation', () => {
@@ -99,11 +82,11 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
 
   })
 
-  Cypress.Commands.add('tTSFValidation', () => {
+  /*Cypress.Commands.add('tTSFValidation', () => {
     cy.intercept('GET', 'https://onetrackwebapi.azurewebsites.net/api/invoices/DefaultTerm').as('typeToSearch')
     cy.wait('@typeToSearch').its('response.statusCode').should('eq', 200)
   
-  })
+  })*/
 
   Cypress.Commands.add('proceedButValidation', () => {
     cy.intercept('GET', 'https://onetrackwebapi.azurewebsites.net/api/AddressBooks/GetServiceLocations/544118').as('proceedButPageDownloaded')
@@ -116,6 +99,12 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
     cy.wait('@getIFrameValidation').its('response.statusCode').should('eq', 200)
   })
 
+  //------Functions
+
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * (max - 1)) ;
+  }
+  
   //------Commands
 
   Cypress.Commands.add('agapeSelector', () => {
@@ -125,26 +114,12 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
       })
     })
   })
-
-  /*Cypress.Commands.add('newRandomItem', () => {
-cy.get(pe.random_item).its('children').then((item) => {
-  const items = $li.toArray()
-  return Cypress._.sample(items)
-})
-.then(($li) => {
-  expect(Cypress.dom.isJquery($li), 'jQuery element').to.be.true
-  cy.log(`you picked "${$li.text()}"`)
-})
-//.click()
-    //const sum = 0
-    //cy.get(pe.random_item).its('children').each((el)=>{
-      //sum ++
-      //   
-        //el.text() == pe.clientName ? cy.log('Ok!') && cy.get(el).click() : cy.log('Elements didnt match')
-      //})
-      //cy.log(sum)
-    })*/
-  
+  Cypress.Commands.add('newRandomItem', () => {
+    cy.get(pe.random_item).its('length').then((rand)=>{
+      cy.get(pe.random_item).eq(getRandomInt(rand)).click()
+      
+      })
+    })  
 
   Cypress.Commands.add('iFrameCommand', () => {
     cy.get('@invoicePrice').invoke('text').then((text) => {
@@ -159,7 +134,6 @@ cy.get(pe.random_item).its('children').then((item) => {
 
     })
     
-
   })
 
 //------ElementValidation
