@@ -31,7 +31,9 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
   //cy.get(pe.test_sec_option, setTimeout = 100 ).click()////////////////////
 
   cy.get(pe.search_field).click()
-  cy.tTSFValidation.call();
+  cy.wait(1000)
+  //cy.newRandomItem.call();
+  //cy.tTSFValidation.call();
   cy.wait(1000)
   cy.get(pe.test_option).click()
   //cy.pause()
@@ -123,6 +125,26 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
       })
     })
   })
+
+  /*Cypress.Commands.add('newRandomItem', () => {
+cy.get(pe.random_item).its('children').then((item) => {
+  const items = $li.toArray()
+  return Cypress._.sample(items)
+})
+.then(($li) => {
+  expect(Cypress.dom.isJquery($li), 'jQuery element').to.be.true
+  cy.log(`you picked "${$li.text()}"`)
+})
+//.click()
+    //const sum = 0
+    //cy.get(pe.random_item).its('children').each((el)=>{
+      //sum ++
+      //   
+        //el.text() == pe.clientName ? cy.log('Ok!') && cy.get(el).click() : cy.log('Elements didnt match')
+      //})
+      //cy.log(sum)
+    })*/
+  
 
   Cypress.Commands.add('iFrameCommand', () => {
     cy.get('@invoicePrice').invoke('text').then((text) => {
