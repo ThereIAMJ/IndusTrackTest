@@ -1,7 +1,7 @@
 declare namespace Cypress {
     interface Chainable<Subject> {
 
-      //-------Login
+      //------Login
 
         login(email: any, password: any): Chainable<any>
         loginFormValidation(): Chainable<any>
