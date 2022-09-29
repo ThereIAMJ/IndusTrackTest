@@ -32,6 +32,8 @@ export class PageElements {
     test_option = '#mat-option-11'
     test_sec_option = '#mat-option-12'
     random_item = '.mat-option.mat-focus-indicator.ng-star-inserted'
+    dublicate = '.mat-dialog-container#mat-dialog-0'
+    dupl_button = 'button.mat-focus-indicator.btn.btn-primary.mat-button.mat-button-base._mat-animation-noopable.ng-star-inserted'
     discount_add = 'tr.ng-star-inserted > :nth-child(2) > .ng-star-inserted'
     discount_number = 'input[name="discountValue"]'
     discount_type = 'select[name="discountKind"]'

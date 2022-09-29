@@ -1,7 +1,6 @@
 
 import './commands'
-import './selectors'  
-//import 'cypress-iframe' 
+import './selectors'
 
 if (Cypress.config('hideXHR')) {
     const app = window.top;

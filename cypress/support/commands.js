@@ -32,24 +32,18 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
   cy.wait(1000)
   cy.newRandomItem.call();
   cy.wait(1000)
-
-  //cy.get(pe.test_sec_option, setTimeout = 100 ).click()////////////////////
-
+  cy.duplicateWindow.call();
   cy.get(pe.discount_add).click()
   cy.get(pe.discount_number).clear().type('10')
   cy.get(pe.discount_type).select(0)
   cy.get(pe.discount_submit).click()
   cy.get(pe.invoice_actions).click()
-  //cy.pause();
-  cy.wait(1000)
   cy.get(pe.invoice_preview).contains("Preview").click()
-  cy.wait(1000)
+  cy.iFrameValidation.call();
   cy.get(pe.prise_field).eq(1).as('invoicePrice')
-  cy.wait(1000)
   cy.iFrameCommand.call();
   cy.get(pe.iFrameClosebutton).click()
   cy.get(pe.invoice_actions).click()
-  cy.wait(1000)
   cy.get(pe.invoice_delete).contains("Delete").click()
   cy.get(pe.invoice_delete_confirm).click()
 
@@ -95,7 +89,7 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
   })
 
   Cypress.Commands.add('iFrameValidation', () => {
-    cy.intercept('GET', 'https://onetrackwebapi.azurewebsites.net/api/Warehouse/').as('getIFrameValidation')
+    cy.intercept('GET', 'https://onetrackwebapi.azurewebsites.net/api/common/GetTaxRates').as('getIFrameValidation')
     cy.wait('@getIFrameValidation').its('response.statusCode').should('eq', 200)
   })
 
@@ -134,6 +128,13 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
 
     })
     
+  })
+
+  Cypress.Commands.add('duplicateWindow', () => {
+    if (Cypress.$(pe.dublicate).length > 0) {                                                     //---------verify that exist on page,
+      cy.get(pe.dupl_button).click()                                                              //---------if not, than skip
+      cy.wait(1000)
+    }
   })
 
 //------ElementValidation
