@@ -3,9 +3,7 @@
 export class PageElements {
 
     //------- env
-
-    email = "jorji@ehtest.com"
-    password = "admin"
+    
     searchClient = "agape"
     clientName = "Agape Mechanical"
 
