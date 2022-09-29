@@ -6,8 +6,6 @@ const {
 
 const pe = new PageElements()
 
-
-
 Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
   cy.get(pe.email_input).clear().type(email)
   cy.get(pe.password_input).clear().type(password)
@@ -47,7 +45,6 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
   cy.get(pe.invoice_delete).contains("Delete").click()
   cy.get(pe.invoice_delete_confirm).click()
 
-  
 }) 
  
   //------API  

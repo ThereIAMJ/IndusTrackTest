@@ -23,7 +23,7 @@ module.exports = defineConfig({
     viewportHeight: 720,
     chromeWebSecurity: false,
     hideXHR: true,
-    numTestsKeptInMemory: 5,
+    numTestsKeptInMemory: 5,                                                   //------Reducing browser consumption
     defaultCommandTimeout: 8000,
     retries: 10,
     
