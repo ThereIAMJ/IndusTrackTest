@@ -76,12 +76,6 @@ Cypress.Commands.add('STR', (email, password, searchClient, clientName) => {
 
   })
 
-  /*Cypress.Commands.add('tTSFValidation', () => {
-    cy.intercept('GET', 'https://onetrackwebapi.azurewebsites.net/api/invoices/DefaultTerm').as('typeToSearch')
-    cy.wait('@typeToSearch').its('response.statusCode').should('eq', 200)
-  
-  })*/
-
   Cypress.Commands.add('proceedButValidation', () => {
     cy.intercept('GET', 'https://onetrackwebapi.azurewebsites.net/api/AddressBooks/GetServiceLocations/544118').as('proceedButPageDownloaded')
     cy.wait('@proceedButPageDownloaded').its('response.statusCode').should('eq', 200)
