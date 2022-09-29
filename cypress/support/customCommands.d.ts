@@ -13,20 +13,20 @@ declare namespace Cypress {
         agapeFieldValidation(element: any): Chainable<any>
         proceedButValidation(element: any): Chainable<any>
         iFrameValidation(element: any): Chainable<any>
+        dropdownActionValidation(element: any): Chainable<any>
         tTSFValidation(element: any): Chainable<any>
 
       //------Commands
 
         iFrameCommand(element: any): Chainable<any>
         agapeSelector(element: any): Chainable<any>
+        duplicateWindow(element: any): Chainable<any>
 
       //------ElementValidation
         
         elementIsVisible(element: any): Chainable<any>
         elementloaded(element: any): Chainable<any>
         elementExist(element: any): Chainable<any>
-        //navigateTo(root: any): Chainable<any>
-        //validateImportedOrders(itemsCount: any): Chainable<any>
         
   }
 }
