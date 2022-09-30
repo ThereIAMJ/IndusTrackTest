@@ -1,9 +1,12 @@
 declare namespace Cypress {
     interface Chainable<Subject> {
 
-      registrationForm(username: any, password: any): Chainable<any>
+      loginForm(username: any, password: any): Chainable<any>
       selectCustomer(searchClient: any, clientName: any): Chainable<any>
       setUpInvoice(element: any): Chainable<any>
+      goToPage(root: any): Chainable<any>
+      comparePrice(element: any): Chainable<any>
+      deleteDraftInvoice(element: any): Chainable<any>
 
       //------Commands
 

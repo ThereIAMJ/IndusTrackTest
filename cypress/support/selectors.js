@@ -2,11 +2,6 @@
 
 export class PageElements {
 
-    //------- env
-    
-    searchClient = "agape"
-    clientName = "Agape Mechanical"
-
     //------- Login Form
 
     loginForm = '.mat-focus-indicator'
@@ -16,11 +11,11 @@ export class PageElements {
 
     //------- Header Menu
     
-    invoice = '[routerlink="/invoicesTab"]'
+    header_menu = '.navbar-nav'
 
     //------- Invoice
 
-    new_invoice = 'button.btn.btn-sm.btn-primary.m-r-sm.ng-star-inserted'
+    new_invoice = 'button[class="btn btn-sm btn-primary m-r-sm ng-star-inserted"]'
     select_customer = '[name="search"]'
     aMechanical = '[@b _ngcontent-wly-c382="">Agape Mechanical]'
     proceed_but = 'button.btn.btn-primary.m-r-sm'
@@ -31,8 +26,6 @@ export class PageElements {
     test_option = '#mat-option-11'
     test_sec_option = '#mat-option-12'
     random_item = '.mat-option.mat-focus-indicator.ng-star-inserted'
-    dublicate = '.mat-dialog-container#mat-dialog-0'
-    dupl_button = 'button.mat-focus-indicator.btn.btn-primary.mat-button.mat-button-base._mat-animation-noopable.ng-star-inserted'
     discount_add = 'tr.ng-star-inserted > :nth-child(2) > .ng-star-inserted'
     discount_number = 'input[name="discountValue"]'
     discount_type = 'select[name="discountKind"]'
@@ -46,6 +39,9 @@ export class PageElements {
 
     iFrameBody = '#contentHolder'
     iFrameClosebutton = 'button.mat-focus-indicator.btn.btn-white.mat-button.mat-button-base._mat-animation-noopable'
+
+    //delete
+
     invoice_delete = 'div > ul > li:nth-child(11) > a'
     invoice_delete_confirm = ('button.mat-focus-indicator.btn.btn-primary.mat-button.mat-button-base._mat-animation-noopable.ng-star-inserted')
 
