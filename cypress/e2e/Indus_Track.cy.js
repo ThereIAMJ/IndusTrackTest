@@ -14,9 +14,10 @@ describe('Indus Track Test', () => {
       })
       cy.clearLocalStorage()
    })
+
    it('New Invoice Test', () => {
-      cy.registrationForm(Cypress.env('users').admin["username"], Cypress.env('users').admin["password"])
-      cy.selectCustomer(pe.searchClient, pe.clientName )
+      cy.loginForm(Cypress.env('users').admin["username"], Cypress.env('users').admin["password"])
+      cy.selectCustomer("agape", "Agape Mechanical")
       cy.setUpInvoice(10, 0)// discound amount, discount type [0 - %; 1 - $]
       cy.comparePrice()
       cy.deleteDraftInvoice()
@@ -62,8 +63,8 @@ describe('Indus Track Test', () => {
       - ! розмір і тип знижки це один з тестових параметрів, який бажано вказувати в тілі тесту it('...){}
          або ж один з параметрів які буде приймати наприклад команда setDiscount(type[%, $], amount[0 - 100%, 0 - maxTotalPrice])
 
-7. суть тестів це просто виконання кроків а й ПЕРЕВІКИ (assertions) в тебе їх всього 9 на 100 кроків 
-   - ! шось зробив/створив -> напиши перевірку (15-20/100 нормально)
+   7. суть тестів це просто виконання кроків а й ПЕРЕВІКИ (assertions) в тебе їх всього 9 на 100 кроків 
+      - ! шось зробив/створив -> напиши перевірку (15-20/100 нормально)
 
- */
+   */
 

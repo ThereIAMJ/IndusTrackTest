@@ -6,23 +6,40 @@ const {
 
 const pe = new PageElements()
 
-Cypress.Commands.add('registrationForm', (username, password) => {
+Cypress.Commands.add('loginForm', (username, password) => {
+  cy.get(pe.email_input).should('be.visible')
   cy.get(pe.email_input).clear().type(username)
+  cy.get(pe.password_input).should('be.visible')
   cy.get(pe.password_input).clear().type(password)
   cy.get(pe.submitLogin_btn).should('not.be.disabled')
   cy.get(pe.loginForm).click()
-  cy.elementIsVisible('ul[class="nav navbar-nav"] > li > ').contains('Invoice')
+  cy.wait(1000)
+  cy.location('pathname').should('eq', '/mapsTab')
+  
 })
 
 Cypress.Commands.add('selectCustomer', (searchClient, clientName) => {
-  cy.get(pe.invoice).click()
-  cy.get(pe.new_invoice).click()    
+  cy.goToPage('Invoices').click()
+  cy.wait(1000)
+
+  //------Closing reminder for continuing test if it exist
+  cy.get("body").then($body => {
+    if ($body.find('ul.nav.navbar-top-links.navbar-right > li[class= "dropdown open"]').length > 0) {                                                     
+      cy.get('a.dropdown-toggle.count-info').click()                                                              
+      cy.wait(1000)
+  }
+})
+  cy.get(pe.new_invoice).click()   
+
   cy.intercept('GET', 'https://onetrackwebapi.azurewebsites.net/api/AddressBooks/GetAddressBooksWithPaging?filter=null&sortBy=companyName&sortDirection=asc&pageIndex=0&pageSize=20&inactiveOnly=false').as('selectPageDownloaded')
     cy.wait('@selectPageDownloaded').its('response.statusCode').should('eq', 200)  
+
   cy.get(pe.select_customer).clear().type(searchClient)
+
   cy.intercept('POST', 'https://onetrackwebapi.azurewebsites.net/api/AddressBooks/AddressBookLiveSearchExt').as('agapePageDownloaded')
     cy.wait('@agapePageDownloaded').its('response.statusCode').should('eq', 200)
   cy.wait(1000)
+
   //------Select our client name
   cy.get('.customerlist > .list-group').eq(0).its('children').then((item)=>{
     cy.get('li>b').each((el)=>{
@@ -30,67 +47,79 @@ Cypress.Commands.add('selectCustomer', (searchClient, clientName) => {
     })
   })                                                                                                    
   cy.get(pe.proceed_but).should('not.be.disabled').click()
-    //cy.get(pe.proceed_but).click()
-  //------Verivying that there is invoice page
+
+  //------Verifying that there is invoice page
   cy.location().should((loc)=> {                                          
   expect(loc.pathname).to.eq('/invoicesTab/overview/0')   
   }) 
 })
 
 Cypress.Commands.add('setUpInvoice', (discountAmount, discountType) => {
-  cy.get(pe.search_field).click()
+  cy.elementExist(pe.search_field).click()
   cy.wait(1000)
-  //------Adding new random item
-  cy.get(pe.random_item).its('length').then((rand)=>{
-    cy.get(pe.random_item).eq(getRandomInt(rand)).click()
-  cy.get(pe.search_field).click()
-  })
-  cy.wait(1000)
-  cy.get(pe.random_item).its('length').then((rand)=>{
-    cy.get(pe.random_item).eq(getRandomInt(rand)).click()
-  })
-  cy.wait(1000)
-  //---------Verifying that there is duplicate window warning. If it is, than confirming duplication
-  if (Cypress.$(pe.dublicate).length > 0) {                                                     
-    cy.get(pe.dupl_button).click()                                                              
-    cy.wait(1000)
-  }
 
-  cy.get(pe.discount_add).click()
+  //------Adding 2 new random item
+  cy.get(pe.random_item).its('length').then((rand)=>{
+    cy.get(pe.random_item).eq(getRandomInt(rand-1)).click()
+  cy.get(pe.search_field).click()
+  })
+  cy.wait(1000)
+  cy.get(pe.random_item).its('length').then((rand)=>{
+    cy.get(pe.random_item).eq(getRandomInt(rand)).click()
+    cy.wait(1000)
+
+  //---------Verifying that there is duplicate window warning. If it is, than confirming duplication
+  cy.get("body").then($body => {
+    if ($body.find('.warningModal').length > 0) {                                                     
+      cy.get('.warningModal').contains('Yes').click()
+      cy.log('There are Duplications!')
+    } else {
+      cy.log('No Duplications!')
+    }
+  })
+})
+  
+  cy.wait(1000)
+  cy.elementExist(pe.discount_add).click()
   cy.get(pe.discount_number).clear().type(discountAmount)
   cy.get(pe.discount_type).select(discountType)
   cy.get(pe.discount_submit).click()
   cy.get(pe.invoice_actions).click()
   cy.get(pe.invoice_preview).contains("Preview").click()
+  cy.wait(1000) 
+  cy.elementExist(pe.iFrameBody)
 })
+
 Cypress.Commands.add('comparePrice', () => {
-  cy.intercept('GET', 'https://onetrackwebapi.azurewebsites.net/api/common/GetTaxRates').as('getIFrameValidation')
-    cy.wait('@getIFrameValidation').its('response.statusCode').should('eq', 200)
+  cy.elementExist(pe.prise_field)
+  cy.elementExist(pe.preview_prise_field)
   cy.get(pe.prise_field).eq(1).as('invoicePrice')
+
   //------Comparing creating pages prise and prise from iFrame
   cy.get('@invoicePrice').invoke('text').then((text) => {
     const counts = text
       cy.get(pe.iFrameBody).its('0.contentDocument.body').should('be.visible')
       .then(cy.wrap)
-      cy.get('.table.invoice-total >> tr.total > td').eq(1).invoke('text').then((text) => {
+
+      cy.get(pe.preview_prise_field).eq(1).invoke('text').then((text) => {
         const new_counts = text
         expect(counts).to.eq(new_counts)
       })
   })  
 })
 
-  Cypress.Commands.add('deleteDraftInvoice', () => {
-  cy.get(pe.iFrameClosebutton).click()
-  cy.get(pe.invoice_actions).click()
-  cy.get(pe.invoice_delete).contains("Delete").click()
-  cy.get(pe.invoice_delete_confirm).click()
+Cypress.Commands.add('deleteDraftInvoice', () => {
+  cy.elementExist(pe.iFrameClosebutton).click()
+  cy.elementExist(pe.invoice_actions).click()
+  cy.elementExist(pe.invoice_delete).contains("Delete").click()
+  cy.elementExist(pe.invoice_delete_confirm).click()
 
 }) 
  
   //------Functions
 
   function getRandomInt(max) {
-    return Math.floor(Math.random() * (max - 1)) ;
+    return Math.floor(Math.random() * max) ;
   }
  
 //------ElementValidation
@@ -102,8 +131,57 @@ Cypress.Commands.add('comparePrice', () => {
     cy.get(element).should('be.exist')
   })
 
+  Cypress.Commands.add('goToPage', (root) => {
 
+    cy.get(pe.header_menu).then(() => {
+  
+      switch (root) {
+  
+        case 'Form':
 
+          case 'Map':
+            cy.get('ul[class="nav navbar-nav"] > li > a ').to.eq(0).click()
+            break
+            
+          case 'Customer':
+            cy.get('ul[class="nav navbar-nav"] > li > a ').to.eq(1).click()
+            break
+    
+          case 'Estimates':
+            cy.get('ul[class="nav navbar-nav"] > li > a ').to.eq(2).click()
+            break
+    
+          case 'Schedule':  
+            cy.get('ul[class="nav navbar-nav"] > li > a ').to.eq(3).click()
+            break
+    
+          case 'Invoices':
+            cy.get('ul[class="nav navbar-nav"] > li > a ').eq(4).click()
+            break
+    
+          case 'Timesheet':
+            cy.get('ul[class="nav navbar-nav"] > li > a ').to.eq(5).click()
+            break
+    
+          case 'SnowTrack':
+            cy.get('ul[class="nav navbar-nav"] > li > a ').to.eq(6).click()
+            break
+    
+          case 'P.O.':
+            cy.get('ul[class="nav navbar-nav"] > li > a ').to.eq(7).click()
+            break
+    
+          case 'Reports':
+            cy.get('ul[class="nav navbar-nav"] > li > a ').to.eq(8).click()
+            break
+
+        default:
+          break
+  
+      }
+  
+    })
+  })
 
 
 
