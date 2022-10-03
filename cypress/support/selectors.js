@@ -13,7 +13,7 @@ export class PageElements {
     
     header_menu = '.navbar-nav'
 
-    //------- Invoice
+    //------- Invoice customer
 
     new_invoice = 'button[class="btn btn-sm btn-primary m-r-sm ng-star-inserted"]'
     select_customer = '[name="search"]'
@@ -26,10 +26,10 @@ export class PageElements {
     test_option = '#mat-option-11'
     test_sec_option = '#mat-option-12'
     random_item = '.mat-option.mat-focus-indicator.ng-star-inserted'
-    discount_add = 'tr.ng-star-inserted > :nth-child(2) > .ng-star-inserted'
-    discount_number = 'input[name="discountValue"]'
-    discount_type = 'select[name="discountKind"]'
-    discount_submit = '#modalAddDiscount .btn-primary' 
+    discount_add = 'a[class="ng-star-inserted"]'
+    discount_number = 'div.row > div.form-group >> input'
+    discount_type = 'div.row > div.form-group >> select'
+    discount_submit = 'div > div.modal-footer > button.btn.btn-primary' 
     invoice_actions = '.btn-group > .btn'
     invoice_preview = 'div > ul > li:nth-child(3) > a' 
     prise_field = '.table.invoice-total.readonly >> tr.total > td' 
@@ -42,7 +42,7 @@ export class PageElements {
 
     //delete
 
-    invoice_delete = 'div > ul > li:nth-child(11) > a'
-    invoice_delete_confirm = ('button.mat-focus-indicator.btn.btn-primary.mat-button.mat-button-base._mat-animation-noopable.ng-star-inserted')
+    invoice_delete = 'div > ul > li > a > i[class="far fa-trash-alt"'
+    invoice_delete_confirm = 'button.mat-focus-indicator.btn.btn-primary.mat-button.mat-button-base._mat-animation-noopable.ng-star-inserted'
 
 }
