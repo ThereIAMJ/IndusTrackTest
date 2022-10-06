@@ -5,7 +5,7 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: 'https://onetrackui.azurewebsites.net/',
 
-    env: {                                                                      //------Can wrire users setting here
+    env: {                                                                      //------Users setting here
       users: {     
             admin: {
               username: "jorji@ehtest.com",
@@ -17,7 +17,7 @@ module.exports = defineConfig({
     viewportHeight: 720,
     chromeWebSecurity: false,
     hideXHR: true,
-    numTestsKeptInMemory: 5,                                                  //------Reducing browser consumption
+    numTestsKeptInMemory: 5,                                                    //------Reducing browser consumption
     defaultCommandTimeout: 8000,
     retries: 10,
     
