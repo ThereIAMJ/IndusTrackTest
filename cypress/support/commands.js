@@ -31,12 +31,13 @@ Cypress.Commands.add('selectCustomer', (searchClient, clientName) => {
       cy.wait(1000)
     }
   })
+
   cy.get(pe.new_invoice).click()
 
   cy.intercept('GET', 'https://onetrackwebapi.azurewebsites.net/api/AddressBooks/GetAddressBooksWithPaging?filter=null&sortBy=companyName&sortDirection=asc&pageIndex=0&pageSize=20&inactiveOnly=false').as('selectFieldDownloaded')
   cy.wait('@selectFieldDownloaded').its('response.statusCode').should('eq', 200)
 
-  cy.get(pe.select_customer).clear().type(searchClient)
+  cy.get('[name="search"]').clear().type(searchClient)
 
   cy.intercept('POST', 'https://onetrackwebapi.azurewebsites.net/api/AddressBooks/AddressBookLiveSearchExt').as('agapePageDownloaded')
   cy.wait('@agapePageDownloaded').its('response.statusCode').should('eq', 200)
@@ -50,7 +51,7 @@ Cypress.Commands.add('selectCustomer', (searchClient, clientName) => {
   })
 
   cy.get(pe.proceed_but).should('not.be.disabled').click()
-  
+
   //------Verifying that there is invoice page
   cy.location().should((loc) => {
     expect(loc.pathname).to.eq('/invoicesTab/overview/0')
