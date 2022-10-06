@@ -16,15 +16,12 @@ export class PageElements {
     //------- Invoice customer
 
     new_invoice = 'button[class="btn btn-sm btn-primary m-r-sm ng-star-inserted"]'
-    select_customer = '[name="search"]'
     aMechanical = '[@b _ngcontent-wly-c382="">Agape Mechanical]'
     proceed_but = 'button.btn.btn-primary.m-r-sm'
 
     //------- Invoice setup
 
     search_field = '#mat-input-6'
-    test_option = '#mat-option-11'
-    test_sec_option = '#mat-option-12'
     random_item = '.mat-option.mat-focus-indicator.ng-star-inserted'
     discount_add = 'a[class="ng-star-inserted"]'
     discount_number = 'div.row > div.form-group >> input'
