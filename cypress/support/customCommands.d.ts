@@ -7,13 +7,14 @@ declare namespace Cypress {
       comparePrice(element: any): Chainable<any>
       deleteDraftInvoice(element: any): Chainable<any>
 
-      //------Commands
-
       goToPage(root: any): Chainable<any>
-      duplicateWindow(element: any): Chainable<any>        
+      invoiceOptions(element: any): Chainable<any>
+      pageVerify(element: any): Chainable<any>       
       elementIsVisible(element: any): Chainable<any>
       elementloaded(element: any): Chainable<any>
       elementExist(element: any): Chainable<any>
+      duplicateWindow(element: any): Chainable<any> 
+      
         
   }
 }
